@@ -30,8 +30,8 @@
           
             <blockquote class="blockquote mt-3">
                 <p class="quote mb-0 small">Minal aidin wal faizin. Kak Sintia Indahsari, kalau ada kata, sikap, atau perbuatanku yang kurang berkenan, aku minta maaf ya. Semoga kita bisa saling memaafkan dan membuka lembaran baru. Selamat Idul Fitri! 🙏✨ Mohon maaf lahir dan batin.
-                </p> <audio id="bg-music" autoplay loop >
-                  <source src="https://ajiramdaniarm.github.io/Minal-Aidin-Walfaizin.io/bg.mp3" type="audio/mpeg">
+                </p> <audio id="bg-music" autoplay loop hidden>
+                  <source src="bg.mp3" type="audio/mpeg">
                   Your browser does not support the audio tag.
               </audio>
               
@@ -46,22 +46,20 @@
       
 
     <script>
-   document.addEventListener("DOMContentLoaded", function () {
-    let bgMusic = document.getElementById("bg-music");
-    let playButton = document.getElementById("play-music");
-
-    // Cek apakah sebelumnya musik sudah diputar
-    if (localStorage.getItem("musicPlayed") === "true") {
-        bgMusic.play().catch(() => console.log("Autoplay dicegah oleh browser"));
-    }
-
-    // Klik tombol untuk mulai musik
-    playButton.addEventListener("click", function () {
-        bgMusic.play();
-        localStorage.setItem("musicPlayed", "true"); // Simpan status
-        playButton.style.display = "none"; // Sembunyikan tombol setelah diputar
+      document.addEventListener("DOMContentLoaded", function () {
+        let bgMusic = document.getElementById("bg-music");
+    
+        // Cek apakah sebelumnya musik sudah diputar
+        if (localStorage.getItem("musicPlayed") === "true") {
+            bgMusic.play();
+        }
+    
+        document.addEventListener("click", function () {
+            bgMusic.play();
+            localStorage.setItem("musicPlayed", "true"); // Simpan status pemutaran
+        });
     });
-});
+    
 
     </script>
         
