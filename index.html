@@ -46,21 +46,31 @@
       
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        let bgMusic = document.getElementById("bg-music");
-    
-        // Cek apakah sebelumnya musik sudah diputar
-        if (localStorage.getItem("musicPlayed") === "true") {
-            bgMusic.play();
-        }
-    
-        document.addEventListener("click", function () {
-            bgMusic.play();
-            localStorage.setItem("musicPlayed", "true"); // Simpan status pemutaran
-        });
-    });
-    
+   document.addEventListener("DOMContentLoaded", function () {
+    let bgMusic = document.getElementById("bg-music");
 
+    // Cek apakah browser mengizinkan pemutaran otomatis
+    let playMusic = () => {
+        let playPromise = bgMusic.play();
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                localStorage.setItem("musicPlayed", "true"); // Simpan status
+            }).catch(error => {
+                console.log("Pemutaran audio dicegah oleh browser.");
+            });
+        }
+    };
+
+    // Coba putar otomatis jika sebelumnya sudah diputar
+    if (localStorage.getItem("musicPlayed") === "true") {
+        playMusic();
+    }
+
+    // Pastikan musik diputar setelah klik pertama
+    document.addEventListener("click", function () {
+        playMusic();
+    });
+});
     </script>
         
     <!-- Optional JavaScript -->
