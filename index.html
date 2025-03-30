@@ -1,116 +1,73 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Selamat Hari Raya Idul Fitri</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway:500,400,300,200,100" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- Custom CSS -->
-    <style>
-        body {
-            text-align: center;
-            font-family: 'Raleway', sans-serif;
-            background-color: #f8f9fa;
-        }
+    <link rel="stylesheet" href="style.css">
+    <title>Selamat Hari Raya Idul Fitri</title>
+  </head>
+  <body>
 
-        .content {
-            margin-top: 50px;
-        }
-
-        #play-music {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 10px 15px;
-            background: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            display: none; /* Tombol hanya muncul jika autoplay gagal */
-        }
-
-        blockquote {
-            font-size: 1.2rem;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- GIF Ucapan Idul Fitri -->
-    <h1>
-        <img width="100" src="https://media1.tenor.com/m/7KYOEjW9VW4AAAAC/selamat-hari-raya-idul-fitri-2023.gif" alt="GIF Idul Fitri Lucu">
-    </h1>
-
-    <div class="content">
-        <p class="lead mt-2">بسم الله الرحمن الرحيم</p>
-        <h2>Selamat Hari Raya Idul Fitri hari ini! 🌙✨ 1 Syawal 1446 H</h2>
-
-        <a class="typewrite" data-period="2000" data-type='["Saya Kak Aji Ramdani Mengucapkan", "Minal Aidin Wal Faidzin", "Mohon Maaf Lahir dan Batin"]'>
-            <span class="wrap"></span>
-        </a>
-
-        <!-- Pesan Ucapan -->
-        <blockquote class="blockquote mt-3">
-            <p class="quote mb-0 small">
-                Minal aidin wal faizin. Kak Sintia Indahsari, kalau ada kata, sikap, atau perbuatanku yang kurang berkenan, aku minta maaf ya. Semoga kita bisa saling memaafkan dan membuka lembaran baru. Selamat Idul Fitri! 🙏✨ Mohon maaf lahir dan batin.
+    <link href='https://fonts.googleapis.com/css?family=Raleway:500,400,300,200,100' rel='stylesheet' type='text/css'>
+    <canvas class="container" id="container" role="main"></canvas>
+      <div class="content">
+        <h1>
+          <img width="100" src="https://media1.tenor.com/m/7KYOEjW9VW4AAAAC/selamat-hari-raya-idul-fitri-2023.gif" alt="GIF Idul Fitri Lucu">
+            <div id="jam"></div>
+            <p class="lead mt-2">
+                بسم الله الرحمن الرحيم
             </p>
-            <footer class="blockquote-footer">Kak Sintia Indahsari</footer>
-        </blockquote>
+            <div class="intro">Selamat Hari Raya Idul Fitri hari ini! 🌙✨ 1 Syawal 1446 H</div>
+            <a class="typewrite" data-period="2000" data-type='[ "Saya Kak Aji Ramdani Mengucapkan", "Minal Aidin Wal Faidzin", "Mohon Maaf Lahir dan Batin"]'>
+              <span class="wrap"></span>
+            </a>
+          
+            <blockquote class="blockquote mt-3">
+                <p class="quote mb-0 small">Minal aidin wal faizin. Kak Sintia Indahsari, kalau ada kata, sikap, atau perbuatanku yang kurang berkenan, aku minta maaf ya. Semoga kita bisa saling memaafkan dan membuka lembaran baru. Selamat Idul Fitri! 🙏✨ Mohon maaf lahir dan batin.
+                </p> <audio id="bg-music" autoplay loop controls>
+                  <source src="https://ajiramdaniarm.github.io/Minal-Aidin-Walfaizin.io/bg.mp3" type="audio/mpeg">
+                  Your browser does not support the audio tag.
+              </audio>
+              
+                <footer class="blockquote-footer">Kak Sintia Indahsari</footer>
+              </blockquote>
+        </h1>
+      </div>
     </div>
+    <div class="blur blurTop"><canvas class="canvas"id="blurCanvasTop"></canvas></div>
+    <div class="blur blurBottom"><canvas width="1000px" height="1000px" class="canvas" id="blurCanvasBottom"></canvas></div>
 
-    <!-- Tombol untuk memutar musik jika autoplay gagal -->
-    <button id="play-music">🎵 Putar Musik</button>
+      
 
-    <!-- Musik Background -->
-    <audio id="bg-music" loop>
-        <source src="https://ajiramdaniarm.github.io/Minal-Aidin-Walfaizin.io/bg.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- JavaScript untuk Autoplay Musik -->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let bgMusic = document.getElementById("bg-music");
-            let playButton = document.getElementById("play-music");
-
-            // Coba autoplay musik jika sebelumnya sudah diputar
-            if (localStorage.getItem("musicPlayed") === "true") {
-                bgMusic.muted = true; // Bypass autoplay restriction
-                bgMusic.play().then(() => {
-                    bgMusic.muted = false; // Unmute setelah mulai
-                }).catch(() => {
-                    console.log("Autoplay dicegah oleh browser");
-                    playButton.style.display = "block"; // Tampilkan tombol jika gagal autoplay
-                });
-            }
-
-            // Event klik untuk memutar musik
-            document.addEventListener("click", function () {
-                bgMusic.play();
-                localStorage.setItem("musicPlayed", "true");
-                playButton.style.display = "none"; // Sembunyikan tombol setelah klik
-            });
-
-            // Event klik tombol "Putar Musik"
-            playButton.addEventListener("click", function () {
-                bgMusic.play();
-                localStorage.setItem("musicPlayed", "true");
-                playButton.style.display = "none";
-            });
+      document.addEventListener("DOMContentLoaded", function () {
+        let bgMusic = document.getElementById("bg-music");
+    
+        // Cek apakah sebelumnya musik sudah diputar
+        if (localStorage.getItem("musicPlayed") === "true") {
+            bgMusic.play();
+        }
+    
+        document.addEventListener("click", function () {
+            bgMusic.play();
+            localStorage.setItem("musicPlayed", "true"); // Simpan status pemutaran
         });
+    });
+    
+
     </script>
-
-    <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
+        
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
 </body>
 </html>
