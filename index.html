@@ -48,29 +48,21 @@
     <script>
    document.addEventListener("DOMContentLoaded", function () {
     let bgMusic = document.getElementById("bg-music");
+    let playButton = document.getElementById("play-music");
 
-    // Cek apakah browser mengizinkan pemutaran otomatis
-    let playMusic = () => {
-        let playPromise = bgMusic.play();
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
-                localStorage.setItem("musicPlayed", "true"); // Simpan status
-            }).catch(error => {
-                console.log("Pemutaran audio dicegah oleh browser.");
-            });
-        }
-    };
-
-    // Coba putar otomatis jika sebelumnya sudah diputar
+    // Cek apakah sebelumnya musik sudah diputar
     if (localStorage.getItem("musicPlayed") === "true") {
-        playMusic();
+        bgMusic.play().catch(() => console.log("Autoplay dicegah oleh browser"));
     }
 
-    // Pastikan musik diputar setelah klik pertama
-    document.addEventListener("click", function () {
-        playMusic();
+    // Klik tombol untuk mulai musik
+    playButton.addEventListener("click", function () {
+        bgMusic.play();
+        localStorage.setItem("musicPlayed", "true"); // Simpan status
+        playButton.style.display = "none"; // Sembunyikan tombol setelah diputar
     });
 });
+
     </script>
         
     <!-- Optional JavaScript -->
